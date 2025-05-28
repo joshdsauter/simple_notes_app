@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.0" // ✅ Add this line
+    id("kotlin-kapt")
 }
 
 android {
@@ -55,6 +56,9 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.1.0")
     implementation("androidx.navigation:navigation-compose:2.7.7")
     debugImplementation("androidx.compose.ui:ui-tooling:1.5.4")
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1") // for annotation processing
+    implementation("androidx.room:room-ktx:2.6.1") // for coroutines support
 
     // ✅ Existing libraries (can remove constraintlayout if unused)
     implementation(libs.androidx.core.ktx)

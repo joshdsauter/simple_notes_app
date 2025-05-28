@@ -1,29 +1,44 @@
 package com.example.simplenotesapp.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
+import androidx.compose.runtime.State
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.simplenotesapp.data.model.Note
+import com.example.simplenotesapp.data.repository.NotesRepository
+import kotlinx.coroutines.launch
 
-class NotesViewModel : ViewModel() {
-    // Internal state
-    private val _notes = mutableStateListOf(
-        Note(1, "Grocery List", "Eggs, Milk, Bread, and Butter"),
-        Note(2, "Workout Plan", "Push-ups, Squats, 20-min run"),
-        Note(3, "Ideas", "Build a note-taking app, read a book, start journaling")
-    )
+class NotesViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository = NotesRepository(application)
 
-    // External immutable access
-    val notes: List<Note> = _notes
+    private val _notes = mutableStateOf<List<Note>>(emptyList())
+    val notes: State<List<Note>> = _notes
+
+    init {
+        viewModelScope.launch {
+            repository.getAllNotes().collect { noteList ->
+                _notes.value = noteList
+            }
+        }
+    }
 
     fun addNote(note: Note) {
-        _notes.add(note)
+        viewModelScope.launch {
+            repository.addNote(note)
+            // Create a new list with the added note and assign it to _notes.value
+            _notes.value = _notes.value + note
+        }
     }
 
-    // Later: deleteNote()
-
-    fun getNextId(): Int {
-        return (_notes.maxOfOrNull { it.id } ?: 0) + 1
+    fun deleteNote(note: Note) {
+        viewModelScope.launch {
+            repository.deleteNote(note)
+            // Create a new list without the deleted note and assign it to _notes.value
+            _notes.value = _notes.value - note
+        }
     }
 
-    // Later: updateNote(), etc.
 }

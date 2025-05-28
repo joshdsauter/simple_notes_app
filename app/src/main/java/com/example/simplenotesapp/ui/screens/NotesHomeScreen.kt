@@ -49,7 +49,7 @@ fun NotesHomeScreen(
             )
 
             LazyColumn {
-                items(notes) { note ->
+                items(notes.value) { note ->
                     NoteItem(note = note)
                     Spacer(modifier = Modifier.height(12.dp))
                 }

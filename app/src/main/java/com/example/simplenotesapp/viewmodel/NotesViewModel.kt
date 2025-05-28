@@ -23,5 +23,9 @@ class NotesViewModel : ViewModel() {
         _notes.remove(note)
     }
 
+    fun getNextId(): Int {
+        return (_notes.maxOfOrNull { it.id } ?: 0) + 1
+    }
+
     // Later: updateNote(), etc.
 }

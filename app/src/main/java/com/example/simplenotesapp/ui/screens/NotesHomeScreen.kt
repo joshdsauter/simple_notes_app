@@ -28,12 +28,6 @@ fun NotesHomeScreen(
     viewModel: NotesViewModel = viewModel()
 ) {
     val notes = viewModel.notes // ← ViewModel state
-    // 🔹 Sample notes for now
-    val sampleNotes = listOf(
-        Note(1, "Grocery List", "Eggs, Milk, Bread, and Butter"),
-        Note(2, "Workout Plan", "Push-ups, Squats, 20-min run"),
-        Note(3, "Ideas", "Build a note-taking app, read a book, start journaling")
-    )
 
     Scaffold(
         floatingActionButton = {

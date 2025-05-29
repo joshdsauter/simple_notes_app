@@ -48,12 +48,21 @@ fun NotesHomeScreen(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            LazyColumn {
-                items(notes.value) { note ->
-                    NoteItem(note = note)
-                    Spacer(modifier = Modifier.height(12.dp))
+            if (notes.value.isEmpty()) {
+                Text(
+                    text = "No notes yet. Tap + to create one!",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 32.dp)
+                )
+            } else {
+                LazyColumn {
+                    items(notes.value) { note ->
+                        NoteItem(note = note)
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
                 }
             }
+
         }
     }
 }

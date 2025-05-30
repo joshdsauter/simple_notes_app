@@ -11,6 +11,7 @@ class NotesRepository(context: Context) {
     private val noteDao = NotesDatabaseProvider.getDatabase(context).noteDao()
 
     suspend fun addNote(note: Note) = noteDao.insertNote(note)
+    suspend fun updateNote(note: Note) = noteDao.updateNote(note)
     fun getAllNotes(): Flow<List<Note>> = noteDao.getAllNotes()
     suspend fun deleteNote(note: Note) = noteDao.deleteNote(note)
 }

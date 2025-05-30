@@ -1,5 +1,6 @@
 package com.example.simplenotesapp.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,11 +17,12 @@ import androidx.compose.ui.unit.dp
 import com.example.simplenotesapp.data.model.Note
 
 @Composable
-fun NoteItem(note: Note) {
+fun NoteItem(note: Note, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clickable(onClick = onClick), // 🔹 Make the whole card clickable
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),

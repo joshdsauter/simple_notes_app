@@ -18,12 +18,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.simplenotesapp.data.model.Note
 import com.example.simplenotesapp.ui.components.NoteItem
 import com.example.simplenotesapp.viewmodel.NotesViewModel
 
 @Composable
 fun NotesHomeScreen(
     onAddNote: () -> Unit = {},
+    onNoteClick: (Note) -> Unit = {}, // 🔹 New parameter
     viewModel: NotesViewModel = viewModel()
 ) {
     val notes = viewModel.notes // ← ViewModel state
@@ -57,7 +59,7 @@ fun NotesHomeScreen(
             } else {
                 LazyColumn {
                     items(notes.value) { note ->
-                        NoteItem(note = note)
+                        NoteItem(note = note, onClick = { onNoteClick(note) }) // 🔹 Click handler
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                 }

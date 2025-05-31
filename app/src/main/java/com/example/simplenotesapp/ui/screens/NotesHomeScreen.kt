@@ -59,10 +59,15 @@ fun NotesHomeScreen(
             } else {
                 LazyColumn {
                     items(notes.value) { note ->
-                        NoteItem(note = note, onClick = { onNoteClick(note) }) // 🔹 Click handler
+                        NoteItem(
+                            note = note,
+                            onClick = { onNoteClick(note) },
+                            onDelete = { viewModel.deleteNote(it) }
+                        )
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                 }
+
             }
 
         }

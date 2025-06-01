@@ -1,11 +1,9 @@
 package com.example.simplenotesapp.viewmodel
 
 import android.app.Application
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.compose.runtime.State
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simplenotesapp.data.model.Note
 import com.example.simplenotesapp.data.repository.NotesRepository

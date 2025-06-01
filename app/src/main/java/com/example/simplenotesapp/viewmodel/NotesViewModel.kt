@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 
 class NotesViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = NotesRepository(application)
-
     private val _notes = mutableStateOf<List<Note>>(emptyList())
     val notes: State<List<Note>> = _notes
 
@@ -25,26 +24,36 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun addNote(note: Note) {
+    fun addNote(title: String, content: String) {
+        val now = System.currentTimeMillis()
+        val note = Note(
+            title = title,
+            content = content,
+            createdAt = now,
+            updatedAt = now
+        )
         viewModelScope.launch {
             repository.addNote(note)
-            // Create a new list with the added note and assign it to _notes.value
-            _notes.value = _notes.value + note
         }
     }
 
-    fun updateNote(note: Note) {
+    fun updateNote(id: Int, title: String, content: String, originalCreatedAt: Long) {
+        val now = System.currentTimeMillis()
+        val edited = Note(
+            id = id,
+            title = title,
+            content = content,
+            createdAt = originalCreatedAt,
+            updatedAt = now
+        )
         viewModelScope.launch {
-            repository.updateNote(note)
+            repository.updateNote(edited)
         }
     }
 
     fun deleteNote(note: Note) {
         viewModelScope.launch {
             repository.deleteNote(note)
-            // Create a new list without the deleted note and assign it to _notes.value
-            _notes.value = _notes.value - note
         }
     }
-
 }

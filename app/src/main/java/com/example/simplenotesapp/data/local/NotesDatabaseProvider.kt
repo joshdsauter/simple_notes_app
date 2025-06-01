@@ -13,7 +13,9 @@ object NotesDatabaseProvider {
                 context.applicationContext,
                 NotesDatabase::class.java,
                 "notes-db"
-            ).build()
+            )
+                .fallbackToDestructiveMigration() // recreate on version bump
+                .build()
             INSTANCE = instance
             instance
         }

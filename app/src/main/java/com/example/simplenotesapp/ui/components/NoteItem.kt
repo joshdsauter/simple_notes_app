@@ -26,6 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.simplenotesapp.data.model.Note
+import com.example.simplenotesapp.util.formatTimestamp
+import com.example.simplenotesapp.util.getRelativeTime
 
 @Composable
 fun NoteItem(
@@ -60,6 +62,16 @@ fun NoteItem(
                     text = note.content,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 2
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Last updated: ${getRelativeTime(note.updatedAt)}",
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Text(
+                    text = "Created: ${formatTimestamp(note.createdAt)}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
             }
 

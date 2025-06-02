@@ -12,6 +12,6 @@ class NotesRepository(context: Context) {
 
     suspend fun addNote(note: Note) = noteDao.insertNote(note)
     suspend fun updateNote(note: Note) = noteDao.updateNote(note)
-    fun getAllNotes(): Flow<List<Note>> = noteDao.getAllNotes()
+    val getAllNotes: Flow<List<Note>> = noteDao.getAllNotesSortedByUpdated()
     suspend fun deleteNote(note: Note) = noteDao.deleteNote(note)
 }

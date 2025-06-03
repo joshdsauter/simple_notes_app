@@ -14,9 +14,10 @@ import com.example.simplenotesapp.data.model.NotesViewModelFactory
 import com.example.simplenotesapp.ui.screens.NoteEditorScreen
 import com.example.simplenotesapp.ui.screens.NotesHomeScreen
 import com.example.simplenotesapp.viewmodel.NotesViewModel
+import com.example.simplenotesapp.viewmodel.ThemeViewModel
 
 @Composable
-fun NotesAppNavHost() {
+fun NotesAppNavHost(themeViewModel: ThemeViewModel) {
     val navController = rememberNavController()
     val viewModel: NotesViewModel =
         viewModel(factory = NotesViewModelFactory(LocalContext.current.applicationContext as Application))
@@ -27,12 +28,12 @@ fun NotesAppNavHost() {
     ) {
         composable(Screen.NotesHome.route) {
             NotesHomeScreen(
-                viewModel = viewModel,
-                onAddNote = { navController.navigate("${Screen.NoteEditor.route}/-1") },
                 onNoteClick = { note ->
-                    // Navigate with an ID → editor knows to load & edit an existing note
-                    navController.navigate("${Screen.NoteEditor.route}/${note.id}")
-                }
+                    navController.navigate("${Screen.NoteEditor.route}?id=${note.id}&title=${note.title}&content=${note.content}")
+                },
+                onAddNote = { navController.navigate(Screen.NoteEditor.route) },
+                viewModel = viewModel,
+                themeViewModel = themeViewModel // 👈 pass this
             )
         }
 

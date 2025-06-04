@@ -68,12 +68,6 @@ fun NotesHomeScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            Text(
-                text = "Your Notes",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
             if (notes.value.isEmpty()) {
                 Text(
                     text = "No notes yet. Tap + to create one!",

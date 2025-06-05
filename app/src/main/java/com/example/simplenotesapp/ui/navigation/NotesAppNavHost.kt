@@ -29,7 +29,7 @@ fun NotesAppNavHost(themeViewModel: ThemeViewModel) {
         composable(Screen.NotesHome.route) {
             NotesHomeScreen(
                 onNoteClick = { note ->
-                    navController.navigate("${Screen.NoteEditor.route}?id=${note.id}&title=${note.title}&content=${note.content}")
+                    navController.navigate("${Screen.NoteEditor.route}/${note.id}")
                 },
                 onAddNote = { navController.navigate(Screen.NoteEditor.route) },
                 viewModel = viewModel,

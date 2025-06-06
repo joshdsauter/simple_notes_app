@@ -3,6 +3,7 @@ package com.example.simplenotesapp.ui.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.runtime.getValue
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -68,6 +70,18 @@ fun NotesHomeScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
+            val searchQuery by viewModel.searchQuery
+
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { viewModel.updateSearchQuery(it) },
+                label = { Text("Search notes...") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 12.dp),
+                singleLine = true
+            )
+
             if (notes.value.isEmpty()) {
                 Text(
                     text = "No notes yet. Tap + to create one!",

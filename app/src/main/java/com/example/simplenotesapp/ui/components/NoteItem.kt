@@ -33,7 +33,7 @@ import com.example.simplenotesapp.util.getRelativeTime
 @Composable
 fun NoteItem(
     note: Note,
-    onClick: () -> Unit,
+    onClick: (Int) -> Unit,
     onDelete: (Note) -> Unit = {},
     onEditClick: () -> Unit,
 ) {
@@ -43,7 +43,7 @@ fun NoteItem(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .clickable { onClick() }, // Card is clickable,
+            .clickable { onClick(note.id) }, // Card is clickable,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),

@@ -12,6 +12,7 @@ import androidx.navigation.navArgument
 import com.example.simplenotesapp.data.model.Note
 import com.example.simplenotesapp.data.model.NotesViewModelFactory
 import com.example.simplenotesapp.ui.screens.NoteEditorScreen
+import com.example.simplenotesapp.ui.screens.NoteViewScreen
 import com.example.simplenotesapp.ui.screens.NotesHomeScreen
 import com.example.simplenotesapp.viewmodel.NotesViewModel
 import com.example.simplenotesapp.viewmodel.ThemeViewModel
@@ -28,13 +29,31 @@ fun NotesAppNavHost(themeViewModel: ThemeViewModel) {
     ) {
         composable(Screen.NotesHome.route) {
             NotesHomeScreen(
-                onNoteClick = { note ->
+                onNoteEdit = { note ->
                     navController.navigate("${Screen.NoteEditor.route}?noteId=${note.id}")
                 },
+                onNoteView = { id -> navController.navigate("${Screen.NoteView.route}?noteId=$id") },
                 onAddNote = { navController.navigate(Screen.NoteEditor.route) },
                 viewModel = viewModel,
                 themeViewModel = themeViewModel // 👈 pass this
             )
+        }
+
+        composable(
+            route = "${Screen.NoteView.route}?noteId={noteId}",
+            arguments = listOf(navArgument("noteId") { type = NavType.IntType })
+        ) { entry ->
+            val id = entry.arguments?.getInt("noteId") ?: return@composable
+            val note = viewModel.notes.value.find { it.id == id }
+            if (note != null) {
+                NoteViewScreen(
+                    note = note,
+                    onEdit = { navController.navigate("${Screen.NoteEditor.route}?noteId=$id") },
+                    onBack = { navController.popBackStack() }
+                )
+            } else {
+                navController.popBackStack() // note not found—go back
+            }
         }
 
         composable(

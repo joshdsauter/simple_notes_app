@@ -37,7 +37,8 @@ import com.example.simplenotesapp.viewmodel.ThemeViewModel
 @Composable
 fun NotesHomeScreen(
     onAddNote: () -> Unit = {},
-    onNoteClick: (Note) -> Unit = {}, // 🔹 New parameter
+    onNoteEdit: (Note) -> Unit = {},
+    onNoteView: (Int) -> Unit = {},
     viewModel: NotesViewModel = viewModel(),
     themeViewModel: ThemeViewModel
 ) {
@@ -104,9 +105,9 @@ fun NotesHomeScreen(
                     items(notes.value) { note ->
                         NoteItem(
                             note = note,
-                            onClick = { onNoteClick(note) },
+                            onClick = { onNoteView(note.id) },
                             onDelete = { viewModel.deleteNote(it) },
-                            onEditClick = { onNoteClick(note) }
+                            onEditClick = { onNoteEdit(note) }
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                     }

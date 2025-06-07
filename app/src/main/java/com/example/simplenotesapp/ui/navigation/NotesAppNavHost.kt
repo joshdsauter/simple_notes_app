@@ -29,7 +29,7 @@ fun NotesAppNavHost(themeViewModel: ThemeViewModel) {
         composable(Screen.NotesHome.route) {
             NotesHomeScreen(
                 onNoteClick = { note ->
-                    navController.navigate("${Screen.NoteEditor.route}/${note.id}")
+                    navController.navigate("${Screen.NoteEditor.route}?noteId=${note.id}")
                 },
                 onAddNote = { navController.navigate(Screen.NoteEditor.route) },
                 viewModel = viewModel,
@@ -38,12 +38,11 @@ fun NotesAppNavHost(themeViewModel: ThemeViewModel) {
         }
 
         composable(
-            route = "${Screen.NoteEditor.route}/{noteId}",
+            route = "${Screen.NoteEditor.route}?noteId={noteId}",
             arguments = listOf(
-                // noteId == -1 means “create new”; otherwise load from DB
                 navArgument("noteId") {
                     type = NavType.IntType
-                    defaultValue = -1
+                    defaultValue = -1 // -1 means "creating a new note"
                 }
             )
         ) { backStackEntry ->

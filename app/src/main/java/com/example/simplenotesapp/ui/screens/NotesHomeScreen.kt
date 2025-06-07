@@ -105,7 +105,8 @@ fun NotesHomeScreen(
                         NoteItem(
                             note = note,
                             onClick = { onNoteClick(note) },
-                            onDelete = { viewModel.deleteNote(it) }
+                            onDelete = { viewModel.deleteNote(it) },
+                            onEditClick = { onNoteClick(note) }
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                     }

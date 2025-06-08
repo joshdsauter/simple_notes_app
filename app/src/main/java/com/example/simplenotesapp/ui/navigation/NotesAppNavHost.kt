@@ -1,6 +1,7 @@
 package com.example.simplenotesapp.ui.navigation
 
 import android.app.Application
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -48,11 +49,13 @@ fun NotesAppNavHost(themeViewModel: ThemeViewModel) {
             if (note != null) {
                 NoteViewScreen(
                     note = note,
+                    onDelete = { viewModel.deleteNote(it) },
                     onEdit = { navController.navigate("${Screen.NoteEditor.route}?noteId=$id") },
-                    onBack = { navController.popBackStack() }
+                    onBack = { navController.popBackStack() },
+                    navController = navController,
                 )
             } else {
-                navController.popBackStack() // note not found—go back
+                Text("Note not found")
             }
         }
 

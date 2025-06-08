@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.simplenotesapp.data.model.Note
+import com.example.simplenotesapp.ui.components.DeleteNoteDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -74,25 +75,13 @@ fun NoteViewScreen(
         }
     }
     if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Delete Note") },
-            text = { Text("Are you sure you want to delete this note? This action cannot be undone.") },
-            confirmButton = {
-                TextButton(onClick = {
-                    onDelete(note)          // Remove the note
-                    navController.popBackStack() // Go back to home
-                    showDeleteDialog = false
-                }) {
-                    Text("Delete")
-                }
+        DeleteNoteDialog(
+            note = note,
+            onConfirmDelete = {
+                onDelete(it)
+                navController.popBackStack()
             },
-            dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) {
-                    Text("Cancel")
-                }
-            }
+            onDismiss = { showDeleteDialog = false }
         )
     }
-
 }

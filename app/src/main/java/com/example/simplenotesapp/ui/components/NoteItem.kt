@@ -92,23 +92,10 @@ fun NoteItem(
         }
     }
     if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            title = { Text("Delete Note") },
-            text = { Text("Are you sure you want to delete this note? This action cannot be undone.") },
-            confirmButton = {
-                TextButton(onClick = {
-                    onDelete(note)
-                    showDialog = false
-                }) {
-                    Text("Delete")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDialog = false }) {
-                    Text("Cancel")
-                }
-            }
+        DeleteNoteDialog(
+            note = note,
+            onConfirmDelete = onDelete,
+            onDismiss = { showDialog = false }
         )
     }
 }
